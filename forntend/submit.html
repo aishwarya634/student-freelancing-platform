@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Submit Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/submit.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <div class="topnav__brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">SkillBridge</span>
+    </div>
+    <nav class="topnav__links">
+      <a href="index.html">Dashboard</a>
+      <a href="chat.html">Messages</a>
+      <a href="portfolio.html">Portfolio</a>
+    </nav>
+    <div class="topnav__user">
+      <div class="avatar" id="navAvatar">S</div>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- FORM VIEW -->
+    <div id="formView">
+      <div class="page-header">
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1 class="page-title">Submit Work</h1>
+        <p class="page-subtitle">Submit your deliverables for client review</p>
+      </div>
+
+      <div class="submit-grid">
+        <!-- LEFT COLUMN -->
+        <div class="submit-main">
+
+          <!-- Milestone Info -->
+          <div class="card" id="milestoneInfo">
+            <div class="card__header">
+              <h2 class="card__title">Current Milestone</h2>
+              <span class="badge badge--teal" id="milestoneStatus">In Progress</span>
+            </div>
+            <div class="milestone-details">
+              <div class="milestone-name" id="milestoneName">Loading…</div>
+              <div class="milestone-meta">
+                <span>Due: <strong id="milestoneDue">–</strong></span>
+                <span>Stipend: <strong id="milestoneStipend">–</strong></span>
+              </div>
+            </div>
+            <div class="checklist" id="checklist">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- File Upload -->
+          <div class="card">
+            <h2 class="card__title">Upload Files</h2>
+            <p class="card__sub">ZIP, PDF, images, documents · Max 50MB per file</p>
+            <div class="dropzone" id="dropzone">
+              <div class="dropzone__icon">📁</div>
+              <div class="dropzone__text">Drag & drop files here or <span class="link">click to browse</span></div>
+              <div class="dropzone__hint">Accepted: .zip, .pdf, .png, .jpg, .doc, .docx, .xlsx</div>
+              <input type="file" id="fileInput" multiple accept=".zip,.pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.xlsx,.pptx" hidden/>
+            </div>
+            <div class="file-list" id="fileList"></div>
+          </div>
+
+          <!-- Links -->
+          <div class="card">
+            <h2 class="card__title">Repository & Demo</h2>
+            <div class="form-group">
+              <label class="form-label">GitHub Repository Link <span class="required">*</span></label>
+              <input type="url" id="githubLink" class="form-input" placeholder="https://github.com/username/repo"/>
+              <span class="field-hint">Required — link to your project repository</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Demo Video Link <span class="optional">(optional)</span></label>
+              <input type="url" id="demoLink" class="form-input" placeholder="https://youtube.com/watch?v=... or drive.google.com"/>
+              <span class="field-hint">YouTube or Google Drive link to a walkthrough video</span>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="card">
+            <h2 class="card__title">Notes to Client</h2>
+            <textarea id="notesInput" class="form-textarea" rows="4" placeholder="Describe what you've built, any known issues, or anything the client should know…"></textarea>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-box">
+            <span class="info-box__icon">ℹ️</span>
+            <div>
+              <strong>Client has 5 days to review.</strong> If no response is received within 5 days, the milestone will be automatically approved and the stipend released.
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button class="submit-btn" id="submitBtn">
+            <span id="submitBtnText">Submit Work</span>
+            <span id="submitBtnSpinner" class="spinner" style="display:none"></span>
+          </button>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="submit-sidebar">
+          <div class="card">
+            <h2 class="card__title">Submission Checklist</h2>
+            <ul class="self-check-list" id="selfCheck">
+              <li class="check-item" data-key="files">
+                <span class="check-icon" id="check-files">○</span> Files uploaded
+              </li>
+              <li class="check-item" data-key="github">
+                <span class="check-icon" id="check-github">○</span> GitHub link provided
+              </li>
+              <li class="check-item" data-key="notes">
+                <span class="check-icon" id="check-notes">○</span> Notes written
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2 class="card__title">Project Info</h2>
+            <div class="project-info" id="projectInfo">
+              <div class="info-row"><span>Project</span><strong id="projName">–</strong></div>
+              <div class="info-row"><span>Client</span><strong id="projClient">–</strong></div>
+              <div class="info-row"><span>Milestone</span><strong id="projMilestone">–</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION VIEW -->
+    <div id="confirmView" style="display:none" class="confirm-view">
+      <div class="confirm-card">
+        <div class="confirm-icon">✅</div>
+        <h2 class="confirm-title">Work Submitted!</h2>
+        <p class="confirm-sub">Your work has been sent to the client for review.</p>
+        <div class="confirm-details" id="confirmDetails">
+          <!-- Populated by JS -->
+        </div>
+        <div class="confirm-actions">
+          <a href="chat.html" class="submit-btn" style="display:inline-block;text-decoration:none;text-align:center;">Message Client</a>
+          <a href="index.html" class="submit-btn submit-btn--outline" style="display:inline-block;text-decoration:none;text-align:center;">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/submit.js"></script>
+</body>
+</html>

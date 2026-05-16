@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Assessments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/assessments.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <div class="topnav__brand"><span class="brand-dot"></span><span class="brand-name">SkillBridge</span></div>
+    <nav class="topnav__links">
+      <a href="index.html">Dashboard</a>
+      <a href="chat.html">Messages</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="assessments.html" class="active">Assessments</a>
+    </nav>
+    <div class="topnav__user"><div class="avatar" id="navAvatar">S</div></div>
+  </header>
+
+  <div class="page-wrapper">
+    <div class="page-header">
+      <h1 class="page-title">My Assessments</h1>
+      <p class="page-subtitle">Performance scores and certificates from completed projects</p>
+    </div>
+
+    <!-- Summary Bar -->
+    <div class="summary-bar" id="summaryBar">
+      <div class="summary-card">
+        <div class="summary-value" id="sumAvgScore">–</div>
+        <div class="summary-label">Avg Score</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="sumCompleted">–</div>
+        <div class="summary-label">Completed</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="sumPending">–</div>
+        <div class="summary-label">Pending</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value" id="sumCerts">–</div>
+        <div class="summary-label">Certificates</div>
+      </div>
+    </div>
+
+    <!-- Completed Assessments -->
+    <section>
+      <h2 class="section-title">Completed Assessments</h2>
+      <div class="assessments-grid" id="completedGrid">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Pending Assessments -->
+    <section style="margin-top:2.5rem">
+      <h2 class="section-title">Pending Assessments</h2>
+      <div class="assessments-grid" id="pendingGrid"></div>
+    </section>
+  </div>
+
+  <script src="js/assessments.js"></script>
+</body>
+</html>
