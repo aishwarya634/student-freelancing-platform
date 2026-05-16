@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Review Submission</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/submit.css"/>
+  <style>
+    .review-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+    .review-sidebar { display: flex; flex-direction: column; gap: 1.25rem; position: sticky; top: 80px; }
+    .submission-file { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--gray-100); border-radius: 10px; margin-bottom: 8px; }
+    .submission-file__name { font-weight: 500; font-size: 0.9rem; }
+    .submission-file__size { color: var(--gray-400); font-size: 0.8rem; }
+    .dl-btn { padding: 6px 14px; background: var(--teal); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 0.8rem; text-decoration: none; transition: background 0.2s; }
+    .dl-btn:hover { background: var(--teal-dark); }
+    .dl-btn--outline { background: transparent; border: 1px solid var(--teal); color: var(--teal); }
+    .dl-btn--outline:hover { background: var(--teal-light); }
+    .link-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+    .link-row:last-child { border-bottom: none; }
+    .link-row__label { font-size: 0.85rem; color: var(--gray-400); }
+    .link-row__value { font-weight: 500; font-size: 0.88rem; word-break: break-all; max-width: 250px; }
+    .action-card { border-radius: var(--radius); padding: 1.5rem; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+    .action-card--approve { background: var(--teal-light); border-color: var(--teal); }
+    .action-card--changes { background: #fff8ee; border-color: #f0c060; }
+    .action-card__title { font-family: var(--font-head); font-size: 1rem; margin-bottom: 6px; }
+    .action-card__desc { font-size: 0.85rem; color: var(--gray-400); margin-bottom: 1rem; }
+    .notes-box { background: var(--gray-100); border-radius: 10px; padding: 1rem; font-size: 0.9rem; line-height: 1.6; color: var(--gray-700); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; }
+    .modal { background: #fff; border-radius: 20px; padding: 2rem; max-width: 460px; width: 90%; box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+    .modal__title { font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 8px; }
+    .modal__sub { font-size: 0.85rem; color: var(--gray-400); margin-bottom: 1.5rem; }
+    .modal__actions { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .modal__actions .submit-btn { flex: 1; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <div class="topnav__brand"><span class="brand-dot"></span><span class="brand-name">SkillBridge</span></div>
+    <nav class="topnav__links">
+      <a href="index.html">Dashboard</a>
+      <a href="chat.html">Messages</a>
+    </nav>
+    <div class="topnav__user"><div class="avatar" id="navAvatar">C</div></div>
+  </header>
+
+  <div class="page-wrapper">
+    <div class="page-header">
+      <a href="index.html" class="back-link">← Back to Dashboard</a>
+      <h1 class="page-title">Review Submission</h1>
+      <p class="page-subtitle">Review the student's work and take action</p>
+    </div>
+
+    <div class="review-grid">
+      <!-- LEFT -->
+      <div class="submit-main">
+
+        <!-- Submitted Files -->
+        <div class="card">
+          <h2 class="card__title">Submitted Files</h2>
+          <div id="filesList"></div>
+        </div>
+
+        <!-- Links -->
+        <div class="card">
+          <h2 class="card__title">Links</h2>
+          <div id="linksList"></div>
+        </div>
+
+        <!-- Student Notes -->
+        <div class="card">
+          <h2 class="card__title">Notes from Student</h2>
+          <div class="notes-box" id="studentNotes">Loading…</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card">
+          <h2 class="card__title" style="margin-bottom:1rem">Take Action</h2>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="action-card action-card--approve" id="approveCard">
+              <div class="action-card__title">✅ Approve Milestone</div>
+              <div class="action-card__desc">Release the stipend to the student. This action cannot be undone.</div>
+              <button class="dl-btn" id="approveBtn">Approve & Release Stipend</button>
+            </div>
+            <div class="action-card action-card--changes" id="changesCard">
+              <div class="action-card__title">🔄 Request Changes</div>
+              <div class="action-card__desc">Ask the student to revise their work with your feedback.</div>
+              <textarea class="form-textarea" id="changeFeedback" rows="3" placeholder="Describe what needs to be changed…" style="margin-bottom:10px"></textarea>
+              <button class="dl-btn" style="background:#d4a017" id="requestChangesBtn">Send Change Request</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div class="review-sidebar">
+        <div class="card">
+          <h2 class="card__title">Submission Info</h2>
+          <div class="project-info" id="submissionInfo"></div>
+        </div>
+        <div class="card">
+          <h2 class="card__title">Escrow Amount</h2>
+          <div class="escrow-box" style="background:var(--teal-dark);border-radius:12px;padding:1rem;color:#fff;text-align:center">
+            <div style="font-family:var(--font-head);font-size:1.8rem" id="escrowAmount">₹ –</div>
+            <div style="font-size:0.78rem;opacity:0.7">Will be released on approval</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approve Modal -->
+  <div class="modal-overlay" id="approveModal" style="display:none">
+    <div class="modal">
+      <div style="font-size:2.5rem;margin-bottom:1rem">🎉</div>
+      <div class="modal__title">Confirm Approval</div>
+      <div class="modal__sub">This will release <strong id="modalAmount">₹ –</strong> to the student immediately. Are you sure?</div>
+      <div class="modal__actions">
+        <button class="submit-btn submit-btn--outline" onclick="document.getElementById('approveModal').style.display='none'">Cancel</button>
+        <button class="submit-btn" id="confirmApproveBtn">Confirm & Release</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal" style="display:none">
+    <div class="modal" style="text-align:center">
+      <div style="font-size:3rem;margin-bottom:1rem">✅</div>
+      <div class="modal__title" id="successTitle">Done!</div>
+      <div class="modal__sub" id="successMsg">Action completed successfully.</div>
+      <a href="index.html" class="submit-btn" style="display:block;text-decoration:none;margin-top:1rem">Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script src="js/review.js"></script>
+</body>
+</html>

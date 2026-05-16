@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/admin.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <!-- Access Denied overlay -->
+  <div id="accessDenied" style="display:none;position:fixed;inset:0;background:#f4f4f6;display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:1rem">
+    <div style="font-size:3rem">🔒</div>
+    <h2 style="font-family:'Sora',sans-serif">Access Denied</h2>
+    <p style="color:#9898a8">You must be an admin to access this page.</p>
+    <a href="index.html" style="color:#1D9E75;text-decoration:none;font-weight:600">← Back to Dashboard</a>
+  </div>
+
+  <header class="topnav">
+    <div class="topnav__brand"><span class="brand-dot"></span><span class="brand-name">SkillBridge Admin</span></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:1rem">
+      <span style="color:rgba(255,255,255,0.6);font-size:0.85rem" id="adminName">–</span>
+      <a href="index.html" style="color:rgba(255,255,255,0.7);font-size:0.85rem;text-decoration:none">← Exit Admin</a>
+    </div>
+  </header>
+
+  <div class="page-wrapper" id="adminContent">
+    <div class="page-header">
+      <h1 class="page-title">Admin Panel</h1>
+      <p class="page-subtitle">Manage users, projects, companies, and disputes</p>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value" id="statUsers">–</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📁</div>
+        <div class="stat-value" id="statProjects">–</div>
+        <div class="stat-label">Active Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value" id="statStipend">–</div>
+        <div class="stat-label">Stipend Paid</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-value" id="statDisputes">–</div>
+        <div class="stat-label">Disputes</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="users">Users</button>
+      <button class="tab" data-tab="projects">Projects</button>
+      <button class="tab" data-tab="companies">Companies</button>
+      <button class="tab" data-tab="disputes">Disputes</button>
+    </div>
+
+    <!-- Users Table -->
+    <div class="tab-panel active" id="tab-users">
+      <div class="table-card">
+        <div class="table-header">
+          <h2 class="table-title">Users</h2>
+          <input class="table-search" type="text" placeholder="Search users…" id="userSearch"/>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table" id="usersTable">
+            <thead><tr><th>Name</th><th>Role</th><th>Score</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="usersBody"><tr><td colspan="5" class="loading-row">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Table -->
+    <div class="tab-panel" id="tab-projects">
+      <div class="table-card">
+        <div class="table-header">
+          <h2 class="table-title">Projects</h2>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table" id="projectsTable">
+            <thead><tr><th>Title</th><th>Client</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="projectsBody"><tr><td colspan="4" class="loading-row">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Companies Table -->
+    <div class="tab-panel" id="tab-companies">
+      <div class="table-card">
+        <div class="table-header">
+          <h2 class="table-title">Companies</h2>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Company</th><th>Email</th><th>Verified</th><th>Action</th></tr></thead>
+            <tbody id="companiesBody"><tr><td colspan="4" class="loading-row">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disputes Table -->
+    <div class="tab-panel" id="tab-disputes">
+      <div class="table-card">
+        <div class="table-header">
+          <h2 class="table-title">Disputes</h2>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Project</th><th>Student</th><th>Client</th><th>Amount</th><th>Action</th></tr></thead>
+            <tbody id="disputesBody"><tr><td colspan="5" class="loading-row">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div class="modal-overlay" id="confirmModal" style="display:none">
+    <div class="modal">
+      <div class="modal__icon" id="modalIcon">⚠️</div>
+      <div class="modal__title" id="modalTitle">Confirm Action</div>
+      <div class="modal__msg" id="modalMsg">Are you sure?</div>
+      <div class="modal__actions">
+        <button class="btn btn--outline" onclick="document.getElementById('confirmModal').style.display='none'">Cancel</button>
+        <button class="btn btn--danger" id="modalConfirmBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
