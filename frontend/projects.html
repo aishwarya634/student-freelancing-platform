@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Projects - SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/browse.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="dashboard.html" class="logo">SkillBridge</a>
+    <div class="nav-buttons">
+      <a href="dashboard.html" class="btn-login">Dashboard</a>
+      <a href="internships.html" class="btn-login">Internships</a>
+    </div>
+  </nav>
+
+  <header class="browse-header blue-banner">
+    <div class="container">
+      <h1>Contract Engineering & Sprints</h1>
+      <p>Secure micro-budget functional deployments with fully locked client milestones.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="sb-card filter-box">
+      <input type="text" id="projectSearch" placeholder="Filter terms or skill demands...">
+      <select id="typeFilter">
+        <option value="">All Architectures</option>
+        <option value="Frontend">Frontend Dev</option>
+        <option value="Backend">Backend Frameworks</option>
+        <option value="Automation">Python Scripting / Devops</option>
+      </select>
+      <select id="stipendFilter">
+        <option value="0">Minimum Budget (All)</option>
+        <option value="200">$200+ Value Scale</option>
+        <option value="500">$500+ Premium Scale</option>
+      </select>
+    </div>
+
+    <section style="margin-bottom: 40px;">
+      <h3 style="margin-bottom: 16px; color: var(--dark-bg);">Recommended Vectors</h3>
+      <div class="grid-4" id="recommendedGrid"></div>
+    </section>
+
+    <section style="margin-bottom: 40px;">
+      <h3 style="margin-bottom: 16px; color: var(--dark-bg);">All Domain Classifications</h3>
+      <div class="categories-grid" id="allCategoriesGrid"></div>
+    </section>
+
+    <section>
+      <h3 style="margin-bottom: 20px; color: var(--dark-bg);">Available Open Openings</h3>
+      <div id="projectsMasterGrid" style="display:flex; flex-direction:column; gap:16px;"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>
