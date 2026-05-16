@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="dashboard.html" class="logo">SkillBridge</a>
+    <div class="nav-buttons">
+      <a href="projects.html" class="btn-login">Browse Projects</a>
+      <a href="internships.html" class="btn-login">Internships</a>
+      <button onclick="logout()" class="btn-primary" style="padding: 8px 16px; border-radius: 6px;">Sign Out</button>
+    </div>
+  </nav>
+
+  <header class="welcome-banner">
+    <div class="container">
+      <h1 id="welcomeName">Welcome Back, Loading...</h1>
+      <p>Quality Integrity Rating: <strong id="userScore">--</strong>/100 Points | Escrow Capital Balance: <strong id="userEarned">$0.00</strong></p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid-4" style="margin-top: -20px; margin-bottom: 40px;">
+      <div class="sb-card stat-card shadow-sm" style="border-top: 4px solid #0288d1;">
+        <p class="stat-label">Projects Active</p>
+        <h3 class="stat-value" id="countProjects">0</h3>
+      </div>
+      <div class="sb-card stat-card shadow-sm" style="border-top: 4px solid #f57c00;">
+        <p class="stat-label">Internship Tracks</p>
+        <h3 class="stat-value" id="countInternships">0</h3>
+      </div>
+      <div class="sb-card stat-card shadow-sm" style="border-top: 4px solid #d32f2f;">
+        <p class="stat-label">Pending Agreements</p>
+        <h3 class="stat-value" id="countAgreements">0</h3>
+      </div>
+      <div class="sb-card stat-card shadow-sm" style="border-top: 4px solid #7b1fa2;">
+        <p class="stat-label">Locked Escrows</p>
+        <h3 class="stat-value" id="countEscrow">0</h3>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;" class="dashboard-layout">
+      
+      <section>
+        <h2 style="margin-bottom: 20px; color: var(--dark-bg);">Your Active Trackers</h2>
+        <div id="activeTrackersList" style="display:flex; flex-direction:column; gap:16px;">
+          <!-- Dynamically filled with framework card templates -->
+          <p style="color:#666;">Querying your profile pipeline records...</p>
+        </div>
+      </section>
+
+      <aside>
+        <h2 style="margin-bottom: 20px; color: var(--dark-bg);">Execution Reminders</h2>
+        <div class="sb-card reminder-card" style="background: var(--soft-amber); margin-bottom: 16px;">
+          <h5>Maintain Score Health</h5>
+          <p>Dropping below 70 score triggers restricted programmatic profile review filters.</p>
+        </div>
+        <div class="sb-card reminder-card" style="background: var(--soft-blue);">
+          <h5>Submit Milestone Deliverables</h5>
+          <p>Always log tracking check items before milestone countdown targets pass.</p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

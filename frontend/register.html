@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .role-selection { display: flex; gap: 12px; margin-bottom: 20px; }
+    .role-box { flex: 1; border: 1px solid #ccc; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .role-box input { display: none; }
+    .role-box.active { border-color: var(--primary); background: var(--soft-green); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">SkillBridge</a>
+    <div class="nav-buttons"><a href="login.html" class="btn-login">Login</a></div>
+  </nav>
+
+  <div class="container" style="max-width: 500px; margin-top: 40px; margin-bottom: 60px;">
+    <div class="sb-card">
+      <h2 style="color: var(--dark-bg); margin-bottom: 4px;">Get Started</h2>
+      <p style="color: #666; margin-bottom: 20px; font-size: 0.9rem;">Join the platform to clear tasks or procure deliverables.</p>
+      
+      <form id="registerForm">
+        <label style="display:block; margin-bottom:6px; font-size:0.85rem; font-weight:600;">Select Your Profile Scope</label>
+        <div class="role-selection">
+          <label class="role-box active" id="labelStudent">
+            <input type="radio" name="role" value="Student" checked>
+            <strong>Student</strong>
+          </label>
+          <label class="role-box" id="labelClient">
+            <input type="radio" name="role" value="Client">
+            <strong>Client</strong>
+          </label>
+          <label class="role-box" id="labelCompany">
+            <input type="radio" name="role" value="Company">
+            <strong>Company</strong>
+          </label>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom:6px; font-size:0.85rem; font-weight:600;">Full Name</label>
+          <input type="text" id="name" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; font-size:1rem;">
+        </div>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom:6px; font-size:0.85rem; font-weight:600;">Email Address</label>
+          <input type="email" id="regEmail" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; font-size:1rem;">
+        </div>
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; margin-bottom:6px; font-size:0.85rem; font-weight:600;">Password</label>
+          <input type="password" id="regPassword" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; font-size:1rem;">
+        </div>
+        
+        <div style="margin-bottom: 24px;" id="skillsWrapper">
+          <label style="display:block; margin-bottom:6px; font-size:0.85rem; font-weight:600;">Skills (Comma Separated)</label>
+          <input type="text" id="skills" placeholder="e.g. Python, CSS, JavaScript" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; font-size:1rem;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%; padding:12px; border-radius:6px; font-size:1rem; font-weight:600;">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
