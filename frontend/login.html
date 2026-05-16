@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body { background: #f0f9f6; display: flex; flex-direction: column; min-height: 100vh; }
+    .auth-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .auth-card {
+      background: #fff;
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .auth-logo { text-align: center; margin-bottom: 28px; }
+    .auth-logo a { font-size: 1.5rem; font-weight: 800; color: var(--dark-teal); text-decoration: none; }
+    .auth-logo a span { color: var(--teal); }
+    .auth-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+    .auth-card .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px; }
+    .auth-footer { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); }
+    .auth-footer a { color: var(--teal); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="register.html" class="btn-nav-primary">Get Started</a>
+  </nav>
+</header>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <a href="index.html">Skill<span>Bridge</span></a>
+    </div>
+
+    <h2>Welcome back 👋</h2>
+    <p class="sub">Sign in to your SkillBridge account</p>
+
+    <div class="alert alert-error" id="loginError" style="display:none"></div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" id="loginBtn" style="width:100%;justify-content:center;margin-top:8px">
+        Sign In
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="register.html">Register here</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

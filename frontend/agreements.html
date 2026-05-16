@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agreement — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/browse.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="projects.html">Projects</a>
+    <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
+  </nav>
+</header>
+
+<!-- Banner -->
+<div class="page-banner" style="background:var(--red-soft)">
+  <div style="max-width:800px;margin:0 auto">
+    <h1>📜 Project Agreement</h1>
+    <p>Read carefully before confirming — this is a binding commitment</p>
+  </div>
+</div>
+
+<div style="max-width:800px;margin:0 auto;padding:32px 20px">
+
+  <!-- Loading state -->
+  <div id="loadingState" style="text-align:center;padding:40px;color:var(--text-muted)">
+    Loading agreement…
+  </div>
+
+  <!-- Agreement content -->
+  <div id="agreementContent" style="display:none">
+
+    <!-- Project details card -->
+    <div class="agreement-card" id="agreementCard">
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Project Details</h3>
+      <div class="agreement-detail-row">
+        <span class="key">Project Title</span>
+        <span class="val" id="agTitle">—</span>
+      </div>
+      <div class="agreement-detail-row">
+        <span class="key">Client Name</span>
+        <span class="val" id="agClient">—</span>
+      </div>
+      <div class="agreement-detail-row">
+        <span class="key">Expected Outcome</span>
+        <span class="val" id="agOutcome">—</span>
+      </div>
+      <div class="agreement-detail-row">
+        <span class="key">Deadline</span>
+        <span class="val" id="agDeadline">—</span>
+      </div>
+      <div class="agreement-detail-row">
+        <span class="key">Stipend</span>
+        <span class="val" id="agStipend" style="color:var(--teal)">—</span>
+      </div>
+      <div class="agreement-detail-row">
+        <span class="key">Escrow Status</span>
+        <span class="val"><span class="badge badge-teal">Funds Held Securely</span></span>
+      </div>
+    </div>
+
+    <!-- ⚠️ PENALTY BOX — BOLD WARNING ── -->
+    <div class="penalty-box">
+      <h3>⚠️ IMPORTANT — Read All Penalty Clauses Before Accepting</h3>
+      <ul class="penalty-list">
+        <li>Your score will be deducted by 20 points if you fail to deliver the agreed outcome by the deadline.</li>
+        <li>An "Incomplete" badge will be shown on your public profile for 30 days after a failed delivery.</li>
+        <li>You will not be able to apply for any new projects for 7 days following a penalty.</li>
+        <li>The client receives a full automatic refund from escrow if the outcome is not delivered.</li>
+      </ul>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="terms-checks">
+      <label class="terms-check">
+        <input type="checkbox" id="check1" onchange="updateConfirmBtn()">
+        <span>I have read and understood all the terms and penalty clauses stated above.</span>
+      </label>
+      <label class="terms-check">
+        <input type="checkbox" id="check2" onchange="updateConfirmBtn()">
+        <span>I commit to delivering the agreed outcome by the stated deadline. I understand the consequences of non-delivery.</span>
+      </label>
+    </div>
+
+    <!-- Confirm button -->
+    <button class="btn btn-primary" id="confirmBtn" disabled
+      style="width:100%;justify-content:center;padding:14px"
+      onclick="confirmAgreement()">
+      Confirm & Accept Agreement
+    </button>
+    <p style="text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:10px">
+      By confirming, you digitally sign this agreement. This action cannot be undone.
+    </p>
+
+    <!-- Error / success alerts -->
+    <div class="alert alert-error" id="agError" style="display:none;margin-top:16px"></div>
+    <div class="alert alert-success" id="agSuccess" style="display:none;margin-top:16px"></div>
+
+  </div><!-- /agreementContent -->
+</div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!requireAuth()) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const id     = params.get('id');
+
+  async function loadAgreement() {
+    try {
+      let data;
+      if (id) {
+        data = await apiFetch(`/agreements/${id}`);
+      } else {
+        throw new Error('no id');
+      }
+      renderAgreement(data);
+    } catch {
+      // Show demo data
+      renderAgreement({
+        _id: 'demo123',
+        title: 'E-commerce Portfolio Website',
+        client: 'Ravi Kumar (Ravi Stores)',
+        outcome: 'Fully functional 5-page website with product gallery and contact form',
+        deadline: '2025-07-15',
+        stipend: 4500
+      });
+    }
+  }
+
+  function renderAgreement(data) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('agreementContent').style.display = 'block';
+    document.getElementById('agTitle').textContent    = data.title    || '—';
+    document.getElementById('agClient').textContent   = data.client   || '—';
+    document.getElementById('agOutcome').textContent  = data.outcome  || '—';
+    document.getElementById('agStipend').textContent  = data.stipend  ? '₹' + data.stipend.toLocaleString() : 'Volunteer';
+    document.getElementById('agDeadline').textContent = data.deadline
+      ? new Date(data.deadline).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
+      : '—';
+
+    // store id for confirm
+    document.getElementById('confirmBtn').dataset.id = data._id || id || 'demo123';
+  }
+
+  await loadAgreement();
+});
+
+function updateConfirmBtn() {
+  const c1 = document.getElementById('check1').checked;
+  const c2 = document.getElementById('check2').checked;
+  document.getElementById('confirmBtn').disabled = !(c1 && c2);
+}
+
+async function confirmAgreement() {
+  const btn = document.getElementById('confirmBtn');
+  const id  = btn.dataset.id;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Confirming…';
+
+  try {
+    await apiFetch(`/agreements/${id}/accept`, { method: 'POST' });
+    document.getElementById('agSuccess').textContent = '✅ Agreement confirmed! You can now start working on this project.';
+    document.getElementById('agSuccess').style.display = 'block';
+    btn.textContent = '✔ Confirmed';
+    showToast('Agreement signed! Let\'s get to work 🚀');
+    setTimeout(() => { window.location.href = 'outcomes.html?id=' + id; }, 1800);
+  } catch (err) {
+    document.getElementById('agError').textContent = err.message || 'Failed to confirm. Please try again.';
+    document.getElementById('agError').style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = 'Confirm & Accept Agreement';
+    updateConfirmBtn();
+  }
+}
+</script>
+</body>
+</html>
