@@ -1,0 +1,250 @@
+/* browse.css — used by projects.html, internships.html, agreements.html, outcomes.html */
+
+/* ── Page banner ── */
+.page-banner {
+  padding: 40px 24px 32px;
+  border-bottom: 0.5px solid var(--border);
+}
+.page-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+.page-banner p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ── Search / filter bar ── */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  align-items: center;
+}
+.filter-bar input[type="text"],
+.filter-bar select {
+  padding: 9px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  outline: none;
+  font-family: var(--font);
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.filter-bar input[type="text"] { flex: 1; min-width: 200px; }
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--teal); }
+
+/* ── Category chips ── */
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.chip {
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: 0.2s;
+}
+.chip-outline { border-color: var(--border); background: #fff; color: var(--text); }
+.chip-active, .chip-outline:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+/* ── Recommended row ── */
+.rec-card {
+  background: var(--dark-teal);
+  border-radius: var(--radius);
+  padding: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.rec-card:hover { transform: translateY(-2px); }
+.rec-card .icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+.rec-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+.rec-card p { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+/* ── All categories grid ── */
+.cat-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cat-card:hover { border-color: var(--teal); box-shadow: 0 2px 12px rgba(29,158,117,0.1); }
+.cat-card.active { border-color: var(--teal); background: #f0fdf8; }
+.cat-icon { font-size: 1.4rem; }
+.cat-card h4 { font-size: 0.85rem; font-weight: 600; }
+.cat-card p { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ── Project card ── */
+.project-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.2s;
+}
+.project-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.project-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.project-card h3 { font-size: 0.95rem; font-weight: 700; }
+.project-card .outcome { font-size: 0.83rem; color: var(--text-muted); }
+.skill-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.skill-tag {
+  background: #f3f4f6;
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 0.74rem;
+  color: var(--text);
+}
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--border);
+}
+.stipend { font-weight: 700; color: var(--teal); font-size: 0.92rem; }
+.deadline { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ── Internship card ── */
+.intern-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  transition: box-shadow 0.2s;
+}
+.intern-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.intern-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.company-logo {
+  width: 46px; height: 46px;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.intern-card h3 { font-size: 0.95rem; font-weight: 700; }
+.intern-card .company-name { font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+.verified { color: var(--teal); font-size: 0.75rem; }
+.intern-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.intern-meta-item { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+
+/* ── Agreement card ── */
+.agreement-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.agreement-detail-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+  font-size: 0.88rem;
+}
+.agreement-detail-row:last-child { border-bottom: none; }
+.agreement-detail-row .key { color: var(--text-muted); width: 140px; flex-shrink: 0; }
+.agreement-detail-row .val { font-weight: 600; }
+
+/* ── Penalty box ── */
+.penalty-box {
+  background: #fff5f5;
+  border: 2px solid #feb2b2;
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+.penalty-box h3 {
+  color: #c53030;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.penalty-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.penalty-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.88rem; font-weight: 600; color: #c53030;
+}
+.penalty-list li::before { content: '★'; flex-shrink: 0; }
+
+/* ── Checkbox terms ── */
+.terms-checks { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  user-select: none;
+}
+.terms-check input[type="checkbox"] {
+  width: 18px; height: 18px;
+  margin-top: 1px;
+  accent-color: var(--teal);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ── Outcome tracker ── */
+.milestone-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.milestone-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.milestone-header h3 { font-size: 1rem; font-weight: 700; }
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--teal); cursor: pointer; }
+.checklist-item.done { color: var(--text-muted); text-decoration: line-through; }
+
+/* Deadline countdown */
+.countdown-box {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.countdown-box.urgent { border-color: #fc8181; background: #fff5f5; }
+.countdown-icon { font-size: 1.8rem; }
+.countdown-box h4 { font-size: 0.9rem; font-weight: 700; }
+.countdown-box p { font-size: 0.82rem; color: var(--text-muted); }
+.countdown-box.urgent h4 { color: #c53030; }
+
+/* Penalty warning banner */
+.overdue-banner {
+  background: #c53030;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .filter-bar { flex-direction: column; }
+  .filter-bar input[type="text"] { width: 100%; }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body { background: #f0f9f6; display: flex; flex-direction: column; min-height: 100vh; }
+    .auth-wrap { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+    .auth-card {
+      background:#fff; border:0.5px solid var(--border);
+      border-radius:16px; padding:40px; width:100%; max-width:480px;
+    }
+    .auth-logo { text-align:center; margin-bottom:24px; }
+    .auth-logo a { font-size:1.5rem; font-weight:800; color:var(--dark-teal); text-decoration:none; }
+    .auth-logo a span { color:var(--teal); }
+    .auth-card h2 { font-size:1.3rem; font-weight:700; margin-bottom:4px; }
+    .auth-card .sub { color:var(--text-muted); font-size:0.88rem; margin-bottom:24px; }
+
+    /* Role cards */
+    .role-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+    .role-card {
+      border:1.5px solid var(--border); border-radius:10px; padding:16px 10px;
+      text-align:center; cursor:pointer; transition:0.2s; user-select:none;
+    }
+    .role-card:hover { border-color:var(--teal); }
+    .role-card.selected { border-color:var(--teal); background:#f0fdf8; }
+    .role-card .icon { font-size:1.8rem; display:block; margin-bottom:6px; }
+    .role-card h4 { font-size:0.82rem; font-weight:700; }
+    .role-card p { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+
+    .role-label { font-size:0.85rem; font-weight:600; margin-bottom:8px; display:block; }
+    .auth-footer { text-align:center; margin-top:16px; font-size:0.85rem; color:var(--text-muted); }
+    .auth-footer a { color:var(--teal); text-decoration:none; font-weight:600; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <div class="auth-logo">
+      <a href="index.html">Skill<span>Bridge</span></a>
+    </div>
+
+    <h2>Create your account 🚀</h2>
+    <p class="sub">Join thousands of students building real experience</p>
+
+    <div class="alert alert-error" id="registerError" style="display:none"></div>
+
+    <span class="role-label">I am a…</span>
+    <div class="role-grid">
+      <div class="role-card" data-role="student">
+        <span class="icon">🎓</span>
+        <h4>Student</h4>
+        <p>Work on projects & internships</p>
+      </div>
+      <div class="role-card" data-role="client">
+        <span class="icon">💼</span>
+        <h4>Client</h4>
+        <p>Post projects, hire talent</p>
+      </div>
+      <div class="role-card" data-role="company">
+        <span class="icon">🏢</span>
+        <h4>Company</h4>
+        <p>Post internships, find interns</p>
+      </div>
+    </div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="regName">Full Name</label>
+        <input type="text" id="regName" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">Email Address</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" placeholder="At least 6 characters" required>
+      </div>
+      <div class="form-group" id="skillsGroup" style="display:none">
+        <label for="regSkills">Your Skills <span style="color:var(--text-muted);font-weight:400">(comma separated)</span></label>
+        <input type="text" id="regSkills" placeholder="e.g. React, Python, Figma, SEO">
+      </div>
+      <button type="submit" class="btn btn-primary" id="registerBtn" style="width:100%;justify-content:center;margin-top:8px">
+        Create Account
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="login.html">Sign in</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

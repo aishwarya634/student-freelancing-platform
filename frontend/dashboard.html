@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="projects.html">Projects</a>
+    <a href="internships.html">Internships</a>
+    <a href="agreements.html">Agreements</a>
+    <a href="outcomes.html">Outcomes</a>
+    <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
+  </nav>
+</header>
+
+<!-- Welcome Banner -->
+<div class="welcome-banner">
+  <h2>Welcome back, <span id="welcomeName">…</span> 👋</h2>
+  <p>Here's what's happening with your projects today</p>
+  <div class="welcome-pills">
+    <div class="welcome-pill">⭐ Score: <strong id="welcomeScore">—</strong></div>
+    <div class="welcome-pill">💰 Total Earned: <strong id="welcomeEarned">—</strong></div>
+  </div>
+</div>
+
+<!-- Stat Cards -->
+<div class="stat-cards">
+  <div class="stat-card">
+    <div class="stat-card-icon" style="background:var(--blue-soft)">📁</div>
+    <div class="stat-card-info">
+      <div class="num" id="statProjects">—</div>
+      <div class="label">Active Projects</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon" style="background:var(--amber-soft)">🏢</div>
+    <div class="stat-card-info">
+      <div class="num" id="statInternships">—</div>
+      <div class="label">Internships</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon" style="background:var(--red-soft)">📜</div>
+    <div class="stat-card-info">
+      <div class="num" id="statAgreements">—</div>
+      <div class="label">Agreements</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon" style="background:var(--green-soft)">🔒</div>
+    <div class="stat-card-info">
+      <div class="num" id="statEscrow">—</div>
+      <div class="label">Escrow Balance</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<div class="dash-layout">
+
+  <!-- Left: Active Projects -->
+  <div class="dash-main">
+    <div class="card" style="margin-bottom:20px">
+      <div class="dash-section-title">
+        Active Projects
+        <a href="projects.html">Browse more →</a>
+      </div>
+      <div id="activeProjects">
+        <div style="color:var(--text-muted);font-size:0.85rem;padding:16px 0">Loading…</div>
+      </div>
+    </div>
+
+    <!-- How it works reminder -->
+    <div class="card">
+      <div class="dash-section-title">Quick Reminders</div>
+      <div class="reminder-cards">
+        <div class="reminder-card">
+          <span class="ri">🔒</span>
+          <div>
+            <h4>Escrow Protection</h4>
+            <p>Payment is held safely until you deliver.</p>
+          </div>
+        </div>
+        <div class="reminder-card">
+          <span class="ri">📜</span>
+          <div>
+            <h4>Read Agreements</h4>
+            <p>Always read penalty terms before signing.</p>
+          </div>
+        </div>
+        <div class="reminder-card">
+          <span class="ri">📅</span>
+          <div>
+            <h4>Meet Deadlines</h4>
+            <p>Late delivery causes score deductions.</p>
+          </div>
+        </div>
+        <div class="reminder-card">
+          <span class="ri">📊</span>
+          <div>
+            <h4>Track Outcomes</h4>
+            <p>Use the outcome tracker to log progress.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right sidebar -->
+  <div class="dash-side">
+    <div class="card" style="margin-bottom:16px">
+      <div class="dash-section-title">Quick Links</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="projects.html" class="btn btn-outline" style="justify-content:center">🔍 Browse Projects</a>
+        <a href="internships.html" class="btn btn-outline" style="justify-content:center">🏢 Find Internships</a>
+        <a href="outcomes.html" class="btn btn-outline" style="justify-content:center">📊 Track Outcomes</a>
+        <a href="agreements.html" class="btn btn-outline" style="justify-content:center">📜 My Agreements</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="dash-section-title">Your Score</div>
+      <div style="text-align:center;padding:16px 0">
+        <div style="font-size:3rem;font-weight:800;color:var(--teal)" id="bigScore">—</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px">out of 1000</div>
+        <div class="progress-wrap" style="margin:14px 0">
+          <div class="progress-bar" id="scoreBar" style="width:0%"></div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">Keep delivering to raise your score</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  // Wire score bar after dashboard loads
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const score = parseInt(document.getElementById('welcomeScore').textContent) || 0;
+      document.getElementById('bigScore').textContent = score || '—';
+      document.getElementById('scoreBar').style.width = (Math.min(score, 1000) / 10) + '%';
+    }, 800);
+  });
+</script>
+</body>
+</html>
