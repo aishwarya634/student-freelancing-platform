@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outcome Tracker — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/browse.css">
+  <style>
+    /* Submit modal */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+    .modal-close {
+      float: right; cursor: pointer; font-size: 1.3rem;
+      color: var(--text-muted); background: none; border: none;
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="projects.html">Projects</a>
+    <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
+  </nav>
+</header>
+
+<!-- Banner -->
+<div class="page-banner" style="background:var(--green-soft)">
+  <div style="max-width:900px;margin:0 auto">
+    <h1>📊 Outcome Tracker</h1>
+    <p>Track your project milestones and submit deliverables</p>
+  </div>
+</div>
+
+<div style="max-width:900px;margin:0 auto;padding:28px 20px">
+
+  <!-- Overdue penalty banner (hidden by default) -->
+  <div class="overdue-banner" id="overdueBanner" style="display:none">
+    ⛔ Deadline has passed! Please contact your client immediately to avoid automatic penalties.
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown-box" id="countdownBox">
+    <span class="countdown-icon">⏳</span>
+    <div>
+      <h4 id="countdownText">Calculating time remaining…</h4>
+      <p id="countdownDeadline">Loading deadline…</p>
+    </div>
+  </div>
+
+  <!-- Overall progress -->
+  <div class="card" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span style="font-weight:700;font-size:0.92rem">Overall Project Progress</span>
+      <span id="overallPct" style="font-weight:700;color:var(--teal)">0%</span>
+    </div>
+    <div class="progress-wrap" style="height:12px">
+      <div class="progress-bar" id="overallBar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Milestone cards rendered by JS -->
+  <div id="milestonesContainer">
+    <p style="color:var(--text-muted)">Loading milestones…</p>
+  </div>
+
+</div>
+
+<!-- ── Submit Modal ── -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSubmit()">✕</button>
+    <h3 id="submitModalTitle">Submit Milestone</h3>
+    <form id="submitForm">
+      <input type="hidden" id="submitMilestoneIdx">
+      <div class="form-group">
+        <label for="submitLink">Submission Link (GitHub / Drive / Figma)</label>
+        <input type="url" id="submitLink" placeholder="https://…">
+      </div>
+      <div class="form-group">
+        <label for="submitNotes">Notes for Client</label>
+        <textarea id="submitNotes" rows="4" placeholder="Describe what you've completed, any decisions made…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+        Submit Milestone
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/outcomes.js"></script>
+<script>
+  // Wire overall progress bar
+  // Re-calculate every time a checkbox is ticked
+  const origToggle = window.toggleItem;
+  window.toggleItem = function(mi, ii, checked) {
+    origToggle(mi, ii, checked);
+    updateOverallProgress();
+  };
+
+  function updateOverallProgress() {
+    const bars = document.querySelectorAll('[id^="bar-"]');
+    if (!bars.length) return;
+    let total = 0;
+    bars.forEach(b => { total += parseFloat(b.style.width) || 0; });
+    const avg = Math.round(total / bars.length);
+    document.getElementById('overallBar').style.width = avg + '%';
+    document.getElementById('overallPct').textContent = avg + '%';
+  }
+
+  // Run once after milestones render (brief delay)
+  setTimeout(updateOverallProgress, 600);
+</script>
+</body>
+</html>

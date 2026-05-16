@@ -1,0 +1,136 @@
+/* home.css */
+.hero {
+  background: var(--dark-teal);
+  padding: 80px 24px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 0%, rgba(29,158,117,0.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(29,158,117,0.2);
+  color: #5eead4;
+  border: 1px solid rgba(29,158,117,0.3);
+  border-radius: 99px;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  max-width: 680px;
+  margin: 0 auto 16px;
+  letter-spacing: -1px;
+}
+.hero h1 span { color: var(--teal); }
+.hero p {
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  font-size: 1.05rem;
+}
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* Stats row */
+.stats-row {
+  background: var(--white);
+  border-bottom: 0.5px solid var(--border);
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-item .num { font-size: 1.8rem; font-weight: 800; color: var(--teal); }
+.stat-item .label { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+/* How it works */
+.how-it-works { background: var(--gray-soft); }
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.step-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+}
+.step-num {
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal);
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+}
+.step-icon {
+  font-size: 2rem;
+  margin: 16px 0 12px;
+  display: block;
+}
+.step-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+.step-card p { font-size: 0.83rem; color: var(--text-muted); }
+
+/* Why SkillBridge */
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.feature-card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.feature-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+.feature-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* CTA footer strip */
+.cta-strip {
+  background: var(--dark-teal);
+  padding: 56px 24px;
+  text-align: center;
+}
+.cta-strip h2 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.cta-strip p { color: rgba(255,255,255,0.65); margin-bottom: 28px; }
+
+footer {
+  background: #021f18;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-grid { grid-template-columns: 1fr; }
+  .stats-row { gap: 24px; }
+}
+@media (max-width: 480px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}

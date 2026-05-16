@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Projects — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/browse.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="internships.html">Internships</a>
+    <a href="agreements.html">Agreements</a>
+    <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
+  </nav>
+</header>
+
+<!-- Banner -->
+<div class="page-banner" style="background:var(--blue-soft)">
+  <div style="max-width:1100px;margin:0 auto">
+    <h1>📁 Browse Projects</h1>
+    <p>Find real projects that match your skills and start earning</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Search by skill or project name…">
+    <select id="typeFilter">
+      <option value="">All Types</option>
+      <option value="paid">Paid</option>
+      <option value="free">Volunteer</option>
+    </select>
+    <select id="stipendFilter">
+      <option value="">Any Stipend</option>
+      <option value="free">₹0 (Volunteer)</option>
+      <option value="paid">Any paid</option>
+      <option value="5000">₹5,000+</option>
+    </select>
+  </div>
+
+  <!-- Chips -->
+  <div class="chip-row">
+    <span class="chip chip-active" data-filter="">All</span>
+    <span class="chip chip-outline" data-filter="paid">Paid</span>
+    <span class="chip chip-outline" data-filter="free">Volunteer</span>
+  </div>
+
+  <!-- Recommended -->
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px">⭐ Recommended Categories</h3>
+  <div class="grid-4" style="margin-bottom:32px">
+    <div class="rec-card" data-cat="Web Dev">
+      <span class="icon">💻</span>
+      <h4>Web Development</h4>
+      <p>18 active projects</p>
+    </div>
+    <div class="rec-card" data-cat="Design">
+      <span class="icon">🎨</span>
+      <h4>UI/UX Design</h4>
+      <p>12 active projects</p>
+    </div>
+    <div class="rec-card" data-cat="Content">
+      <span class="icon">✍️</span>
+      <h4>Content Writing</h4>
+      <p>9 active projects</p>
+    </div>
+    <div class="rec-card" data-cat="Data">
+      <span class="icon">📊</span>
+      <h4>Data & Analytics</h4>
+      <p>7 active projects</p>
+    </div>
+  </div>
+
+  <!-- All Categories -->
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px">All Categories</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:36px">
+    <div class="cat-card" data-cat="Web Dev"><span class="cat-icon">💻</span><div><h4>Web Dev</h4><p>18 projects</p></div></div>
+    <div class="cat-card" data-cat="Design"><span class="cat-icon">🎨</span><div><h4>Design</h4><p>12 projects</p></div></div>
+    <div class="cat-card" data-cat="Content"><span class="cat-icon">✍️</span><div><h4>Content</h4><p>9 projects</p></div></div>
+    <div class="cat-card" data-cat="Data"><span class="cat-icon">📊</span><div><h4>Data</h4><p>7 projects</p></div></div>
+    <div class="cat-card" data-cat="Marketing"><span class="cat-icon">📣</span><div><h4>Marketing</h4><p>11 projects</p></div></div>
+    <div class="cat-card" data-cat="Video"><span class="cat-icon">🎬</span><div><h4>Video Editing</h4><p>5 projects</p></div></div>
+    <div class="cat-card" data-cat="Mobile"><span class="cat-icon">📱</span><div><h4>Mobile Apps</h4><p>6 projects</p></div></div>
+    <div class="cat-card" data-cat="AI"><span class="cat-icon">🤖</span><div><h4>AI/ML</h4><p>4 projects</p></div></div>
+    <div class="cat-card" data-cat="Photography"><span class="cat-icon">📸</span><div><h4>Photography</h4><p>3 projects</p></div></div>
+    <div class="cat-card" data-cat="Translation"><span class="cat-icon">🌐</span><div><h4>Translation</h4><p>5 projects</p></div></div>
+    <div class="cat-card" data-cat="Music"><span class="cat-icon">🎵</span><div><h4>Music</h4><p>2 projects</p></div></div>
+    <div class="cat-card" data-cat="Legal"><span class="cat-icon">⚖️</span><div><h4>Legal</h4><p>3 projects</p></div></div>
+    <div class="cat-card" data-cat="Finance"><span class="cat-icon">💹</span><div><h4>Finance</h4><p>4 projects</p></div></div>
+    <div class="cat-card" data-cat="Education"><span class="cat-icon">📚</span><div><h4>Education</h4><p>8 projects</p></div></div>
+    <div class="cat-card" data-cat="HR"><span class="cat-icon">👥</span><div><h4>HR / Recruiting</h4><p>3 projects</p></div></div>
+    <div class="cat-card" data-cat="Support"><span class="cat-icon">🎧</span><div><h4>Support</h4><p>6 projects</p></div></div>
+    <div class="cat-card" data-cat="Research"><span class="cat-icon">🔬</span><div><h4>Research</h4><p>5 projects</p></div></div>
+    <div class="cat-card" data-cat="Other"><span class="cat-icon">📦</span><div><h4>Other</h4><p>10 projects</p></div></div>
+  </div>
+
+  <!-- Projects Grid -->
+  <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px">All Projects</h3>
+  <div id="projectsGrid" class="grid-3">
+    <p style="color:var(--text-muted)">Loading projects…</p>
+  </div>
+
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/projects.js"></script>
+</body>
+</html>

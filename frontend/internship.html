@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internships — SkillBridge</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/browse.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">Skill<span>Bridge</span></a>
+  <button class="hamburger"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="projects.html">Projects</a>
+    <a href="agreements.html">Agreements</a>
+    <button id="logoutBtn" class="btn btn-ghost btn-sm">Logout</button>
+  </nav>
+</header>
+
+<!-- Banner -->
+<div class="page-banner" style="background:var(--amber-soft)">
+  <div style="max-width:1100px;margin:0 auto">
+    <h1>🏢 Internship Opportunities</h1>
+    <p>Apply to verified companies and build real work experience</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <input type="text" id="internSearch" placeholder="🔍 Search company or role…">
+    <select id="typeFilter">
+      <option value="">All Types</option>
+      <option value="remote">Remote</option>
+      <option value="hybrid">Hybrid</option>
+      <option value="onsite">On-site</option>
+    </select>
+    <select id="durationFilter">
+      <option value="">Any Duration</option>
+      <option value="1">1 Month</option>
+      <option value="3">3 Months</option>
+      <option value="6">6 Months</option>
+    </select>
+  </div>
+
+  <!-- Internship cards grid -->
+  <div class="grid-3" id="internGrid">
+
+    <!-- Demo cards — in production, load from API -->
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">🛒</div>
+        <div>
+          <h3>Frontend Developer Intern</h3>
+          <div class="company-name">ShopEasy India <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 3 Months</span>
+        <span class="intern-meta-item">🌐 Remote</span>
+        <span class="intern-meta-item">💰 ₹8,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">REST API</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">📊</div>
+        <div>
+          <h3>Data Analyst Intern</h3>
+          <div class="company-name">InsightHub <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 6 Months</span>
+        <span class="intern-meta-item">🏢 Hybrid</span>
+        <span class="intern-meta-item">💰 ₹12,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Tableau</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">🎨</div>
+        <div>
+          <h3>UI/UX Design Intern</h3>
+          <div class="company-name">PixelCraft Studio <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 3 Months</span>
+        <span class="intern-meta-item">🌐 Remote</span>
+        <span class="intern-meta-item">💰 ₹6,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Prototyping</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">📣</div>
+        <div>
+          <h3>Digital Marketing Intern</h3>
+          <div class="company-name">GrowthLabs <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 2 Months</span>
+        <span class="intern-meta-item">🌐 Remote</span>
+        <span class="intern-meta-item">💰 ₹5,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">SEO</span>
+        <span class="skill-tag">Content</span>
+        <span class="skill-tag">Analytics</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">🤖</div>
+        <div>
+          <h3>ML Research Intern</h3>
+          <div class="company-name">NeuralBase AI <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 6 Months</span>
+        <span class="intern-meta-item">🏢 Hybrid</span>
+        <span class="intern-meta-item">💰 ₹15,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">Statistics</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+    <div class="intern-card">
+      <div class="intern-card-top">
+        <div class="company-logo">📱</div>
+        <div>
+          <h3>Mobile App Intern</h3>
+          <div class="company-name">AppForge <span class="verified">✔ Verified</span></div>
+        </div>
+      </div>
+      <div class="intern-meta">
+        <span class="intern-meta-item">📅 3 Months</span>
+        <span class="intern-meta-item">🌐 Remote</span>
+        <span class="intern-meta-item">💰 ₹10,000/mo</span>
+      </div>
+      <div class="skill-tags" style="margin-bottom:14px">
+        <span class="skill-tag">Flutter</span>
+        <span class="skill-tag">Dart</span>
+        <span class="skill-tag">Firebase</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Apply Now</button>
+    </div>
+
+  </div><!-- /internGrid -->
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  // Basic client-side search filter for internship cards
+  document.getElementById('internSearch')?.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.intern-card').forEach(card => {
+      card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  document.getElementById('typeFilter')?.addEventListener('change', function() {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll('.intern-card').forEach(card => {
+      if (!val) { card.style.display = ''; return; }
+      const type = card.textContent.toLowerCase();
+      card.style.display = type.includes(val) ? '' : 'none';
+    });
+  });
+
+  // Apply buttons → call API
+  document.querySelectorAll('.intern-card .btn-primary').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      if (!getToken()) { window.location.href = 'login.html'; return; }
+      this.disabled = true;
+      this.innerHTML = '<span class="spinner"></span>';
+      // In real use: await apiFetch('/internships/<id>/apply', { method:'POST' })
+      setTimeout(() => {
+        showToast('Application submitted! 🎉');
+        this.textContent = '✔ Applied';
+        this.classList.remove('btn-primary');
+        this.classList.add('btn-outline');
+      }, 800);
+    });
+  });
+</script>
+</body>
+</html>
