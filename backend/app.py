@@ -6,7 +6,11 @@ import os
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder='../frontend',
+    static_url_path=''
+)
 CORS(app)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET')
@@ -37,7 +41,7 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 
 @app.route('/')
 def home():
-    return {'message': 'SkillBridge API is running!'}
+    return app.send_static_file('index.html')
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
