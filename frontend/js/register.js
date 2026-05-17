@@ -1,79 +1,64 @@
-// js/register.js
 document.addEventListener('DOMContentLoaded', () => {
-  if (getToken()) {
-    window.location.href = '/dashboard.html';
-    return;
-  }
+  const form = document.getElementById('registerForm');
+  const roleInputs = document.querySelectorAll('input[name="role"]');
+  const skillsField = document.getElementById('skillsField');
 
-  let selectedRole = '';
-
-  // Role card selection
-  document.querySelectorAll('.role-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      selectedRole = card.dataset.role;
-
-      // Show skills field only for students
-      const skillsGroup = document.getElementById('skillsGroup');
-      if (skillsGroup) {
-        skillsGroup.style.display = selectedRole === 'student' ? 'flex' : 'none';
+  // Show/hide skills field based on role
+  roleInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (skillsField) {
+        skillsField.style.display = input.value === 'student' ? 'block' : 'none';
       }
     });
   });
 
-  const form    = document.getElementById('registerForm');
-  const errorEl = document.getElementById('registerError');
-  const btn     = document.getElementById('registerBtn');
+  if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    errorEl.style.display = 'none';
 
-    const name     = document.getElementById('regName').value.trim();
-    const email    = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const skills   = document.getElementById('regSkills')?.value.trim() || '';
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const role = document.querySelector('input[name="role"]:checked')?.value || 'student';
+    const skillsRaw = document.getElementById('skills')?.value || '';
+    const skills = skillsRaw.split(',').map(s => s.trim()).filter(s => s);
 
-    if (!selectedRole) {
-      errorEl.textContent = 'Please select a role first.';
-      errorEl.style.display = 'block';
-      return;
-    }
     if (!name || !email || !password) {
-      errorEl.textContent = 'Please fill in all required fields.';
-      errorEl.style.display = 'block';
+      showToast('Please fill all required fields', 'error');
       return;
     }
+
     if (password.length < 6) {
-      errorEl.textContent = 'Password must be at least 6 characters.';
-      errorEl.style.display = 'block';
+      showToast('Password must be at least 6 characters', 'error');
       return;
     }
 
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Creating account…';
-
-    const payload = { name, email, password, role: selectedRole };
-    if (selectedRole === 'student' && skills) {
-      payload.skills = skills.split(',').map(s => s.trim()).filter(Boolean);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
     }
 
     try {
       const data = await apiFetch('/auth/register', {
         method: 'POST',
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ name, email, password, role, skills })
       });
 
       setToken(data.token);
-      if (data.user) setUser(data.user);
-      showToast('Account created! Welcome 🎉');
-      setTimeout(() => { window.location.href = '/dashboard.html'; }, 700);
+      setUser(data.user);
+      showToast('Account created successfully!');
+      setTimeout(() => {
+        window.location.href = '/dashboard.html';
+      }, 1000);
+
     } catch (err) {
-      errorEl.textContent = err.message || 'Registration failed. Try again.';
-      errorEl.style.display = 'block';
-      btn.disabled = false;
-      btn.innerHTML = 'Create Account';
+      showToast(err.message || 'Registration failed', 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create account';
+      }
     }
   });
 });

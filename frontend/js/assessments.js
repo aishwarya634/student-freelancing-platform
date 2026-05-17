@@ -1,145 +1,62 @@
-const API = 'http://localhost:5000/api';
-const token = localStorage.getItem('token');
-if (!token) window.location.href = 'login.html';
-const headers = { Authorization: `Bearer ${token}` };
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!requireAuth()) return;
 
-window.addEventListener('DOMContentLoaded', () => {
-  setNavAvatar();
-  loadAssessments();
+  const container = document.getElementById('assessmentsList');
+  if (container) container.innerHTML = '<p>Loading assessments...</p>';
+
+  try {
+    const assessments = await apiFetch('/assessments/my');
+
+    if (container && assessments.length > 0) {
+      container.innerHTML = assessments.map(a => `
+        <div class="assessment-card">
+          <div class="assessment-header">
+            <h3>${a.project_title || 'Project'}</h3>
+            <span class="tag tag-done">Completed</span>
+          </div>
+          <p style="font-size:12px;color:#888;margin-bottom:10px">
+            Reviewed on ${formatDate(a.created_at)}
+          </p>
+          <div class="score-grid">
+            <div class="score-box">
+              <div class="score-label">Outcome</div>
+              <div class="score-val">${a.outcome_score}/10</div>
+            </div>
+            <div class="score-box">
+              <div class="score-label">Teamwork</div>
+              <div class="score-val">${a.teamwork_score}/10</div>
+            </div>
+            <div class="score-box">
+              <div class="score-label">On time</div>
+              <div class="score-val">${a.time_score}/10</div>
+            </div>
+            <div class="score-box">
+              <div class="score-label">Total</div>
+              <div class="score-val highlight">${a.total_score}</div>
+            </div>
+          </div>
+          ${a.certificate_issued ? `
+            <div class="cert-row">
+              <span>Certificate issued</span>
+              <button class="btn-teal" onclick="downloadCert('${a._id}')">Download</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    } else if (container) {
+      container.innerHTML = '<p style="color:#888;padding:16px 0">No assessments yet. Complete a project to get scored by a client!</p>';
+    }
+
+  } catch (err) {
+    if (container) container.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+  }
 });
 
-function setNavAvatar() {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const el = document.getElementById('navAvatar');
-  if (el && user.name) el.textContent = user.name[0].toUpperCase();
+function formatDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-async function loadAssessments() {
-  try {
-    const res = await axios.get(`${API}/assessments/my`, { headers });
-    render(res.data);
-  } catch (err) {
-    render(getDemoData());
-  }
+function downloadCert(id) {
+  showToast('Certificate download coming soon!', 'warning');
 }
-
-function getDemoData() {
-  return {
-    completed: [
-      {
-        _id: '1', projectName: 'E-commerce Dashboard', clientName: 'TechStart Inc.',
-        completedDate: '2025-06-01',
-        scores: { outcomeQuality: 85, teamwork: 90, onTime: 75, total: 83 },
-        certificateUrl: '#'
-      },
-      {
-        _id: '2', projectName: 'Hospital Management System', clientName: 'MedCorp Solutions',
-        completedDate: '2025-04-20',
-        scores: { outcomeQuality: 92, teamwork: 88, onTime: 95, total: 91 },
-        certificateUrl: '#'
-      }
-    ],
-    pending: [
-      { _id: '3', projectName: 'Mobile App Redesign', clientName: 'DesignHub Co.' },
-      { _id: '4', projectName: 'API Integration Project', clientName: 'DataFlow Inc.' }
-    ]
-  };
-}
-
-function render(data) {
-  const completed = data.completed || [];
-  const pending = data.pending || [];
-
-  // Summary
-  const totalScore = completed.reduce((s, a) => s + (a.scores?.total || 0), 0);
-  const avgScore = completed.length ? Math.round(totalScore / completed.length) : 0;
-  document.getElementById('sumAvgScore').textContent = completed.length ? avgScore + '%' : '–';
-  document.getElementById('sumCompleted').textContent = completed.length;
-  document.getElementById('sumPending').textContent = pending.length;
-  document.getElementById('sumCerts').textContent = completed.filter(a => a.certificateUrl).length;
-
-  // Completed
-  const completedGrid = document.getElementById('completedGrid');
-  completedGrid.innerHTML = '';
-  if (completed.length === 0) {
-    completedGrid.innerHTML = '<p style="color:var(--gray-400);font-size:0.88rem">No completed assessments yet.</p>';
-  } else {
-    completed.forEach(a => completedGrid.appendChild(buildCompletedCard(a)));
-  }
-
-  // Pending
-  const pendingGrid = document.getElementById('pendingGrid');
-  pendingGrid.innerHTML = '';
-  if (pending.length === 0) {
-    pendingGrid.innerHTML = '<p style="color:var(--gray-400);font-size:0.88rem">No pending assessments.</p>';
-  } else {
-    pending.forEach(a => pendingGrid.appendChild(buildPendingCard(a)));
-  }
-}
-
-function buildCompletedCard(a) {
-  const s = a.scores || {};
-  const total = s.total || 0;
-  const badgeClass = total >= 80 ? 'high' : total >= 60 ? 'mid' : 'low';
-
-  const el = document.createElement('div');
-  el.className = 'assessment-card';
-  el.innerHTML = `
-    <div class="assessment-card__header">
-      <div>
-        <div class="assessment-card__project">${escapeHtml(a.projectName)}</div>
-        <div class="assessment-card__client">${escapeHtml(a.clientName)}</div>
-      </div>
-      <div class="score-badge score-badge--${badgeClass}">${total}%</div>
-    </div>
-    <div class="score-breakdown">
-      ${scoreItem('Outcome Quality', s.outcomeQuality)}
-      ${scoreItem('Teamwork', s.teamwork)}
-      ${scoreItem('On Time', s.onTime)}
-      ${scoreItem('Total Score', s.total, true)}
-    </div>
-    ${a.certificateUrl
-      ? `<a class="cert-btn" href="${escapeHtml(a.certificateUrl)}" download>🏆 Download Certificate</a>`
-      : `<div style="font-size:0.8rem;color:var(--gray-400);text-align:center">Certificate not available</div>`
-    }
-  `;
-  return el;
-}
-
-function scoreItem(label, value, bold = false) {
-  const v = value || 0;
-  return `
-    <div class="score-item">
-      <div class="score-item__label">${label}</div>
-      <div class="score-item__value" ${bold ? 'style="color:var(--teal)"' : ''}>${v}%</div>
-      <div class="score-bar"><div class="score-bar__fill" style="width:${v}%"></div></div>
-    </div>
-  `;
-}
-
-function buildPendingCard(a) {
-  const el = document.createElement('div');
-  el.className = 'pending-card';
-  el.innerHTML = `
-    <div class="pending-card__project">${escapeHtml(a.projectName)}</div>
-    <div class="pending-card__client">${escapeHtml(a.clientName)} · Awaiting client review</div>
-    <div class="pending-scores">
-      ${pendingScore('Outcome Quality')}
-      ${pendingScore('Teamwork')}
-      ${pendingScore('On Time')}
-      ${pendingScore('Total Score')}
-    </div>
-  `;
-  return el;
-}
-
-function pendingScore(label) {
-  return `
-    <div class="pending-score-item">
-      <div class="pending-score-item__label">${label}</div>
-      <div class="pending-score-item__value">- - -</div>
-    </div>
-  `;
-}
-
-function escapeHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
