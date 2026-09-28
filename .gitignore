@@ -1,5 +1,16 @@
-backend/.env
-backend/venv/
-backend/__pycache__/
-*.pyc
+# Python
+.venv/
+**/__pycache__/
+*.py[cod]
+
+# Environment variables
 .env
+.env.*
+**/.env
+**/.env.*
+
+# Node
+node_modules/
+
+# VS Code
+.vscode/
